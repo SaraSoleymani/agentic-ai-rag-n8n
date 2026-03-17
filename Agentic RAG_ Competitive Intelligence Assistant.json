@@ -1,0 +1,316 @@
+{
+  "name": "Agentic RAG: Competitive Intelligence Assistant",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        0,
+        0
+      ],
+      "id": "43d5bcba-d943-4b25-89ba-5228447b5b20",
+      "name": "When chat message received",
+      "webhookId": "337f053a-0b2a-4e6c-8acf-3fd00f99a07a"
+    },
+    {
+      "parameters": {
+        "options": {
+          "dimensions": 512
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        784,
+        416
+      ],
+      "id": "9ebefba0-a0ae-42f5-b82c-fd14a204d284",
+      "name": "Embeddings OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "VwrhD5kIKkZROPql",
+          "name": "OpenAi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o",
+          "mode": "list",
+          "cachedResultName": "GPT-4O"
+        },
+        "responses": {
+          "values": [
+            {
+              "role": "system",
+              "content": "You are a query optimization assistant. Your job is to \nrewrite user questions into retrieval-optimized search queries.\n\nRules:\n- Expand abbreviations and casual language into precise terminology\n- Add relevant domain keywords (product names, technical terms, industry language)\n- Decompose compound questions into a single focused retrieval query\n- Remove conversational filler and pronouns\n- Return only the rewritten query, nothing else"
+            },
+            {
+              "content": "={{ $json.chatInput }}"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "133c8e70-25ad-4a40-b116-84e90e512f8e",
+      "name": "Query Rewriter",
+      "credentials": {
+        "openAiApi": {
+          "id": "VwrhD5kIKkZROPql",
+          "name": "OpenAi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o",
+          "mode": "list",
+          "cachedResultName": "gpt-4o"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        592,
+        224
+      ],
+      "id": "02711d8b-db01-4181-9715-02b3bae0c74c",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "VwrhD5kIKkZROPql",
+          "name": "OpenAi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Chat Trigger\nEntry point for the agentic RAG workflow.\nReceives the user's raw, conversational query.\nIn production replace with a Webhook node to connect\nto Slack, a web form, or a custom frontend.",
+        "height": 208,
+        "width": 288,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -336,
+        -64
+      ],
+      "typeVersion": 1,
+      "id": "53c3629a-e958-433f-85e6-120e5fa31e68",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## Query Rewriter\nFirst LLM call — rewrites the user's casual, natural language \nquery into retrieval-optimized language before it hits Pinecone.\nExpands abbreviations, adds domain terminology, and removes \nconversational filler.\nThis is the core difference from Simple RAG — retrieval quality\nis no longer dependent on how well the user phrases their question.",
+        "height": 208,
+        "width": 448,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        112,
+        -224
+      ],
+      "typeVersion": 1,
+      "id": "27a24297-0c84-4671-9a4d-1e44de870720",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "## Pinecone Vector store\nRetrieves the most semantically similar chunks from the\nknowledge base using the rewritten query as input.\nOperation: Retrieve Documents (As Tool for AI Agent)\nIndex: sales-knowledge-base | Namespace: gtm-docs\nConnected to Synthesis Agent as a tool — the Agent\ndecides when to call it based on the tool description.",
+        "height": 208,
+        "width": 384,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1040,
+        160
+      ],
+      "typeVersion": 1,
+      "id": "53cae4b2-e633-4402-b2d7-8d00ce121814",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "ALWAYS call this tool first before generating any response. \nThis is your only source of information. \nNever answer from memory or training data.\nUse this tool to find information about Acme's competitive \npositioning against Gong, Clari and Chorus, security and \ncompliance policies, and pricing and discount structures.",
+        "pineconeIndex": {
+          "__rl": true,
+          "value": "sales-knowledge-base",
+          "mode": "list",
+          "cachedResultName": "sales-knowledge-base"
+        },
+        "options": {
+          "pineconeNamespace": "gtm-docs"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
+      "typeVersion": 1.3,
+      "position": [
+        784,
+        224
+      ],
+      "id": "525023d1-ec62-4fd3-beec-1609a35f64fa",
+      "name": "Pinecone Vector Store",
+      "credentials": {
+        "pineconeApi": {
+          "id": "BPmCLvupwbm4XAE0",
+          "name": "PineconeApi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## OpenAI Embeddings\nEmbeds the rewritten query into a 1536-dimension vector\nusing text-embedding-3-small.\nMust match the model used during ingestion — consistency\nbetween ingestion and retrieval embeddings is critical.",
+        "height": 208,
+        "width": 384,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        912,
+        432
+      ],
+      "typeVersion": 1,
+      "id": "b8e2e3da-3d2c-468f-a26b-c16db12141fc",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": "## Synthesis Agent\nSecond LLM call — receives the rewritten query as prompt,\ncalls the Pinecone tool to retrieve relevant chunks, and\ngenerates a grounded response using only retrieved content.\nThe original user question is preserved in the system prompt\nso the answer addresses what the user actually asked.\nNever answers from model memory — only from retrieved chunks.",
+        "height": 208,
+        "width": 448,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        592,
+        -224
+      ],
+      "typeVersion": 1,
+      "id": "79e97ef1-9868-4ebf-92db-a2820e4e6e15",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "content": "## OpenAI Chat Model\nThe LLM powering the Synthesis Agent.\nModel: GPT-4o\nKept as a separate sub-node so the model can be\nswapped independently of the Agent configuration.",
+        "height": 208,
+        "width": 272,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        288,
+        240
+      ],
+      "typeVersion": 1,
+      "id": "ed19cb5a-c0ec-42e8-8013-2fbfd0ee4b20",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.output }}",
+        "options": {
+          "systemMessage": "You are a sales assistant for Acme.\nYou MUST call the Pinecone Vector Store tool before answering.\nThe tool returns chunks of text in a pageContent field.\nRead the pageContent values from all returned chunks and use \nthem to answer the user's question.\nBe specific and cite which section your answer came from.\nIf no relevant content is found, say \"I could not find this \nin the knowledge base.\""
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        656,
+        0
+      ],
+      "id": "b3e3e7d6-c53b-4cc4-88c1-b52158042a0b",
+      "name": "Synthesis Agent"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Query Rewriter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Query Rewriter": {
+      "main": [
+        [
+          {
+            "node": "Synthesis Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Synthesis Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pinecone Vector Store": {
+      "ai_tool": [
+        [
+          {
+            "node": "Synthesis Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "6403c680-7145-4f75-9779-8747bdf1e651",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "d2926e605d262bee5909c7941095358b0b2fbb483629d7cc273c8d86e3c55860"
+  },
+  "id": "gnm5BcKDLOaC6UBw",
+  "tags": []
+}

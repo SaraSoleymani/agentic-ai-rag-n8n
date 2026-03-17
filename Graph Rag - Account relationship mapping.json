@@ -1,0 +1,311 @@
+{
+  "name": "Graph Rag - Account relationship mapping",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -96,
+        0
+      ],
+      "id": "560942b0-84df-4009-be64-aab5836f9f3d",
+      "name": "Chat Trigger",
+      "webhookId": "b458acbc-0a12-450b-b507-da13618bb793"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o",
+          "mode": "list",
+          "cachedResultName": "gpt-4o"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        768,
+        224
+      ],
+      "id": "066ea294-8771-47e0-8a58-0a9f67bf845c",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "VwrhD5kIKkZROPql",
+          "name": "OpenAi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o",
+          "mode": "list",
+          "cachedResultName": "GPT-4O"
+        },
+        "responses": {
+          "values": [
+            {
+              "content": "={{ $json.chatInput }}"
+            },
+            {
+              "role": "system",
+              "content": "Extract the company name being asked about from the user's query.\nReturn only a JSON object in this exact format with no other text:\n{\"company\": \"CompanyName\"}"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.1,
+      "position": [
+        64,
+        0
+      ],
+      "id": "e771136c-7e11-4f12-9a28-252d1524cf3c",
+      "name": "Entity Extractor",
+      "credentials": {
+        "openAiApi": {
+          "id": "VwrhD5kIKkZROPql",
+          "name": "OpenAi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://5b148a2f.databases.neo4j.io/db/5b148a2f/query/v2",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Accept",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"statement\": \"MATCH (c:Contact)-[:WORKS_AT|PREVIOUSLY_WORKED_AT]->(company:Company {name: 'Databricks'}) OPTIONAL MATCH (c)<-[:KNOWS]-(ourContact:Contact) RETURN c.name as contactName, c.title as title, ourContact.name as connectedContact\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        560,
+        0
+      ],
+      "id": "37b33494-708d-4a0b-a599-d9829dced4cb",
+      "name": "HTTP Request",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "NAWQzdqFS4BTqimI",
+          "name": "Unnamed credential"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7b6d781b-be07-45da-a8e6-3c2af714ced1",
+              "name": "companyName",
+              "value": "={{ JSON.parse($json.output[0].content[0].text).company }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        384,
+        0
+      ],
+      "id": "ca695e68-c4e6-4bf5-9c76-2c3079179f97",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ JSON.stringify($('HTTP Request').item.json.data) }}",
+        "options": {
+          "systemMessage": "=You are an enterprise sales assistant for Acme.\nYou help sales teams understand account relationships and network connections.\nSynthesize the following graph results into a clear, actionable narrative.\nFocus on relationship paths that could help the sales team get a warm introduction.\nIf no connections are found, say so clearly.\n\nGraph results: {{ JSON.stringify($('HTTP Request').item.json.data) }}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        768,
+        0
+      ],
+      "id": "397c0acf-e6f9-4928-beff-ef5e1cf5769d",
+      "name": "Synthesis Agent"
+    },
+    {
+      "parameters": {
+        "content": "## Chat Trigger\nEntry point for the Graph RAG workflow.\nReceives a natural language question about\naccount relationships or network connections.",
+        "height": 176,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -352,
+        -32
+      ],
+      "typeVersion": 1,
+      "id": "d53dceb6-ea6c-4e80-ab9b-34db0e1ed257",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## Entity Extractor\nParses the user's query and extracts the \ncompany name being asked about.\nReturns a structured JSON object: {\"company\": \"CompanyName\"}\nThis entity is used to drive the graph traversal query.",
+        "height": 192,
+        "width": 272,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -32,
+        -208
+      ],
+      "typeVersion": 1,
+      "id": "fb2d5d1b-59fb-44bd-9eba-5e9cd99f44cc",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "## Edit Fields (Set)\nExtracts the company name from the Entity Extractor\noutput and maps it to a clean field for use\nin the Neo4j query.\ncompanyName → JSON.parse(output).company",
+        "height": 192,
+        "width": 256,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        288,
+        176
+      ],
+      "typeVersion": 1,
+      "id": "78a902bc-925d-4e96-820b-656317f5f4c0",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "## HTTP REquest - Neo4j\nExecutes a Cypher query against the Neo4j AuraDB \ngraph database via the Query API v2.\nTraverses the ontology to find contacts at the \ntarget company and any known connections in our network.\nDISCLAIMER: This is a simplified illustration of Graph RAG.\nProduction graph implementations require dedicated graph  engineers and carefully designed ontologies.",
+        "height": 224,
+        "width": 416,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        416,
+        -272
+      ],
+      "typeVersion": 1,
+      "id": "41ab43bc-dac0-47e8-b0e8-06e0dff9671a",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": "## Synthesis Agent\nReceives the graph traversal results and synthesizes\nthem into a clear, actionable narrative for the sales team.\nFocuses on relationship paths that could facilitate\nwarm introductions into target accounts.\nUnlike Simple and Agentic RAG, the answer here comes\nfrom traversing entity relationships — not from\nsemantic search over documents.",
+        "height": 208,
+        "width": 400,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1120,
+        -32
+      ],
+      "typeVersion": 1,
+      "id": "4853a820-5608-4fd6-bdbd-bdc2d75afbdb",
+      "name": "Sticky Note4"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Chat Trigger": {
+      "main": [
+        [
+          {
+            "node": "Entity Extractor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Synthesis Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Entity Extractor": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Synthesis Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "b7f253f7-a475-475e-96de-854dda6cf1cb",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "d2926e605d262bee5909c7941095358b0b2fbb483629d7cc273c8d86e3c55860"
+  },
+  "id": "uTJRmWmXiT1G1PiE",
+  "tags": []
+}
