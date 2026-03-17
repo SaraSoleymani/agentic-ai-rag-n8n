@@ -22,7 +22,7 @@ The series is published on [Medium](#) and [LinkedIn](#).
 
 | Tier | How it works | Best for | n8n build |
 |------|-------------|----------|-----------|
-| Simple RAG | User query embedded directly, matched against vector store | FAQs, policy lookups, direct queries | Workflows 1A + 1B |
+| Simple RAG | User query embedded directly, matched against vector store | FAQs, policy lookups, direct queries | Workflows 1.1 + 1.2 |
 | Agentic RAG | Orchestrator rewrites query before retrieval | Conversational queries, competitive intelligence | Workflow 2 |
 | Graph RAG | Entities extracted and traversed through a knowledge graph | Account relationships, network connections | Workflow 3 |
 
@@ -109,7 +109,7 @@ This creates the key relationship the Graph RAG workflow surfaces: Jane Smith (C
 
 ## Workflow details
 
-### Workflow 1A — Ingestion pipeline
+### Workflow 1.1— Ingestion pipeline
 
 **Trigger**: Google Drive folder watch (fires on file create or update)
 
@@ -125,7 +125,7 @@ This creates the key relationship the Graph RAG workflow surfaces: Jane Smith (C
 
 ---
 
-### Workflow 1B — Simple RAG query pipeline
+### Workflow 1.2 — Simple RAG query pipeline
 
 **Trigger**: Chat Trigger (replace with Webhook node for Slack or frontend integration)
 
@@ -233,7 +233,7 @@ A few things that aren't obvious from the n8n docs:
 | Week 2 | What is an agentic system, actually? |
 | Week 4 | The AI Meeting Prep Assistant: from problem to full product |
 | Week 5 | RAG systems in practice: Simple, Agentic, and Graph RAG ← you are here |
-| Week 6 | Evaluations: how to know when your RAG system is failing |
+| Week 6 | Evaluations: how to know when your RAG system is ready for launch |
 
 ---
 
