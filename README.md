@@ -10,10 +10,10 @@ The series is published on [Medium](#) and [LinkedIn](#).
 
 | File | Description |
 |------|-------------|
-| `RAG_Ingestion_Google_Drive_to_Pinecone.json` | Workflow 1A — Ingestion pipeline. Watches a Google Drive folder and automatically chunks, embeds, and indexes new documents into Pinecone. |
-| `RAG_Query_Sales_Knowledge_Base.json` | Workflow 1B — Simple RAG query pipeline. Embeds user queries and retrieves grounded answers from the Pinecone knowledge base. |
-| `Agentic_RAG_Competitive_Intelligence_Assistant.json` | Workflow 2 — Agentic RAG. Rewrites user queries before retrieval to improve semantic match, then synthesizes grounded answers. |
-| `Graph_RAG_Account_Relationship_Mapping.json` | Workflow 3 — Graph RAG. Extracts entities from queries, traverses a Neo4j knowledge graph, and synthesizes relational insights. |
+| `Ingestion Pipeline.json` | Workflow 1.1 — Ingestion pipeline. Watches a Google Drive folder and automatically chunks, embeds, and indexes new documents into Pinecone. |
+| `RAG- Query pipeline.json` | Workflow 1.2 — Simple RAG query pipeline. Embeds user queries and retrieves grounded answers from the Pinecone knowledge base. |
+| `Agentic RAG_ Competitive Intelligence Assistant.json` | Workflow 2 — Agentic RAG. Rewrites user queries before retrieval to improve semantic match, then synthesizes grounded answers. |
+| `Graph Rag - Account relationship mapping.jsonn` | Workflow 3 — Graph RAG. Extracts entities from queries, traverses a Neo4j knowledge graph, and synthesizes relational insights. |
 | `knowledge-base/` | Synthetic sales knowledge base used in the demo (plain .txt files). |
 
 ---
