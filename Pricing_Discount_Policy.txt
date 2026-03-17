@@ -1,0 +1,46 @@
+PRICING & DISCOUNT POLICY
+Acme SaaS Platform — Sales Internal Use Only | Effective Q1 2025
+
+PLAN OVERVIEW
+
+Starter: $49/seat/month | Minimum 3 seats | Month-to-month or annual
+Growth: $79/seat/month | Minimum 10 seats | Annual only
+Enterprise: $120/seat/month | Minimum 25 seats | Annual or multi-year
+Enterprise Plus: Custom pricing | Minimum 50 seats | Multi-year preferred
+
+DISCOUNT AUTHORITY & APPROVAL TIERS
+
+All discounts must be logged in Salesforce at the opportunity level before verbal commitments are made to prospects.
+
+Up to 10% discount: AE discretion — no approval needed, log in Salesforce
+11% to 20% discount: Sales Manager approval — requires written approval in Slack #deal-desk, 24hr turnaround SLA
+21% to 30% discount: VP of Sales approval — requires business justification, competitive displacement or multi-year commit preferred
+Above 30% discount: CEO and CFO approval — reserved for strategic accounts, requires full deal brief submitted to deal-desk@acme.com
+
+ENTERPRISE DISCOUNT GUIDELINES
+
+Volume-based discounts (applied to per-seat rate):
+- 50-99 seats: up to 15% volume discount
+- 100-199 seats: up to 20% volume discount
+- 200+ seats: up to 25% volume discount — requires VP approval regardless of final discount level
+
+Multi-year commitment discounts (applied on top of plan pricing before volume discounts):
+- 2-year commit: 10% discount
+- 3-year commit: 15% discount
+
+Multi-year discounts cannot be combined with competitive displacement discounts above 20%. Choose the more favorable discount structure for the customer and document the rationale in Salesforce.
+
+COMPETITIVE DISPLACEMENT POLICY
+
+Accounts actively displacing a named competitor (Gong, Clari, Chorus) are eligible for a one-time competitive displacement discount of up to 25% in year one, stepping up to standard pricing in year two. This requires proof of competitive displacement — contract termination notice or signed letter of intent — submitted to deal-desk before contract signature.
+
+REFUND & CANCELLATION POLICY
+
+Annual contracts:
+Annual contracts are non-refundable after the 14-day onboarding period. Customers who cancel within 14 days of contract start receive a full refund minus any implementation fees. After 14 days, no refunds are issued on annual contract value.
+
+Monthly contracts (Starter plan only):
+Monthly contracts can be cancelled at any time with 30 days written notice. Refunds are prorated to the cancellation date if notice is received before the billing cycle renews. No refunds are issued for partial months after the billing cycle has renewed.
+
+Exceptions:
+Refund exceptions outside these terms require written approval from the VP of Sales and CFO. Exceptions are considered on a case-by-case basis for accounts with documented product defects or force majeure circumstances. Submit exception requests to deal-desk@acme.com with full deal context.

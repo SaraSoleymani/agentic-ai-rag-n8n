@@ -1,0 +1,60 @@
+COMPETITIVE BATTLE CARDS
+Acme SaaS Platform — GTM Internal Use Only
+
+ACME VS. GONG
+
+Where Acme wins against Gong:
+
+Native CRM writeback: Acme writes structured call summaries, next steps, and deal risk signals directly to Salesforce and HubSpot fields. Gong requires manual exports or third-party middleware for the same outcome.
+
+Salesforce-native deployment: For prospects already running Salesforce, Acme installs as a managed package with no separate login. Gong is a separate platform requiring SSO integration and separate user provisioning. This is a critical advantage for Salesforce-heavy enterprise accounts.
+
+Deal intelligence at the rep level: Acme surfaces deal risk and stakeholder gaps at the individual rep dashboard level. Gong's deal intelligence is primarily a manager and leadership view, creating a gap for rep self-service.
+
+Pricing transparency: Acme is per-seat with no conversation volume caps. Gong charges per recorded minute above plan thresholds, creating unpredictable overages for high-volume teams.
+
+Where Gong wins:
+Revenue Intelligence brand: Gong invented the category and has stronger brand recognition in enterprise. Expect Gong to be on every enterprise shortlist regardless of fit.
+Coaching features: Gong's call scoring, talk ratio analytics, and coaching playlists are more mature than Acme's. If the primary use case is rep coaching rather than deal execution, acknowledge this honestly.
+Market presence: Gong has more G2 reviews and a larger customer reference base.
+
+Objection handling for Gong:
+
+Objection: We already use Gong
+Response: Gong and Acme solve different problems. Gong records calls. Acme closes the loop between what happens on calls and what gets updated in your CRM. Many of our customers use both.
+
+Objection: Gong has more integrations
+Response: Acme integrates natively with Salesforce, HubSpot, Outreach, Salesloft, and Zoom. If there is a specific integration requirement, flag it to your SE for a technical confirmation before the next call.
+
+Objection: Gong is the market leader
+Response: Gong leads in call recording. Acme leads in deal execution intelligence. Ask the prospect: are you primarily trying to coach reps, or close more deals? That question usually clarifies the decision.
+
+Positioning Acme against Gong for Salesforce-native prospects:
+When a prospect is deeply embedded in Salesforce, lead with Acme's Salesforce-native architecture. Acme installs as a managed package inside Salesforce — no separate login, no platform switching, no SSO setup. Gong lives outside Salesforce and requires integration work to get data back in. For RevOps teams that have spent years configuring Salesforce, keeping the workflow inside the platform is a meaningful operational advantage. Key proof point: Acme customers report 40% reduction in CRM update time in the first 90 days.
+
+ACME VS. CLARI
+
+Where Acme wins against Clari:
+
+Ease of deployment: Clari requires a 60-90 day implementation engagement. Acme deploys in under two weeks with no professional services requirement on Growth and Enterprise plans.
+
+Mid-market fit: Clari is designed for enterprise teams with dedicated RevOps resources. Acme is usable by a sales manager without a RevOps team. Strong angle for companies under 200 employees.
+
+Call intelligence included: Acme includes call recording and intelligence in the base platform. Clari requires a separate Copilot add-on for similar functionality, increasing total cost.
+
+Where Clari wins:
+Forecasting depth: Clari's AI forecasting model is more mature and has a longer track record in large enterprise accounts.
+Enterprise references: Clari has strong references in Fortune 500 accounts.
+
+Positioning against Clari for Salesforce-heavy prospects:
+Lead with Acme's Salesforce-native architecture. Clari pulls data from Salesforce but lives outside it. Acme lives inside it. Key proof point: Acme customers report 40% reduction in CRM update time in the first 90 days because reps update records from within Salesforce using Acme's AI-generated summaries rather than switching between platforms.
+
+ACME VS. CHORUS (ZOOMINFO)
+
+Where Acme wins against Chorus:
+
+Standalone value: Chorus is increasingly bundled with ZoomInfo contracts. Prospects not using ZoomInfo data products are often paying for functionality they do not need. Acme offers a cleaner, purpose-built alternative.
+
+Product velocity: Since the ZoomInfo acquisition, Chorus has had limited product investment. Acme has shipped 40+ features in the last 12 months.
+
+Support quality: Chorus support response times have declined post-acquisition. Acme offers a dedicated Customer Success Manager on all Enterprise plans with a 4-hour SLA for critical issues.

@@ -1,0 +1,53 @@
+ENTERPRISE SECURITY & COMPLIANCE
+Acme SaaS Platform — Internal Knowledge Base
+
+SOC 2 TYPE II COMPLIANCE
+
+Acme is SOC 2 Type II certified across all five Trust Service Criteria: Security, Availability, Processing Integrity, Confidentiality, and Privacy. Our certification is renewed annually and covers all production infrastructure including multi-tenant cloud environments.
+
+Customers can request our SOC 2 report under NDA by contacting their Account Executive. The report is reviewed by an independent third-party auditor (Deloitte) and covers a 12-month audit period.
+
+MULTI-TENANT ARCHITECTURE & DATA ISOLATION
+
+Acme uses logical data isolation for all multi-tenant deployments. Each customer's data is stored in a dedicated schema within a shared database cluster. Row-level security (RLS) policies enforce tenant boundaries at the database layer, ensuring no cross-tenant data access is possible even in the event of application-layer misconfiguration.
+
+For enterprise customers requiring physical data isolation, Acme offers dedicated single-tenant deployments on request. This option is available on Enterprise and Enterprise Plus plans and carries a 20% infrastructure surcharge.
+
+ENCRYPTION STANDARDS
+
+Data at rest: AES-256 via AWS KMS
+Data in transit: TLS 1.2 minimum, TLS 1.3 preferred
+Database backups: AES-256, encrypted before leaving VPC
+Customer-managed keys: Available on Enterprise Plus plan via AWS KMS BYOK
+
+GDPR & DATA RESIDENCY
+
+Acme is fully GDPR compliant. We act as a Data Processor for all customer data and provide a Data Processing Agreement (DPA) upon request. Our DPA covers sub-processor disclosure, data subject rights, breach notification timelines (72 hours), and cross-border transfer mechanisms.
+
+EU DATA RESIDENCY
+
+Customers requiring EU data residency can elect to have all data stored exclusively in Acme's EU-West (Frankfurt) region. This option is available on Growth, Enterprise, and Enterprise Plus plans. Enabling EU data residency ensures no customer data leaves the EU/EEA at rest. Processing for AI features uses EU-hosted model endpoints only.
+
+To enable EU data residency: submit a request via your Account Executive before provisioning. Data residency region cannot be changed post-provisioning without a full data migration, which requires 30 days notice and is handled by Acme's infrastructure team.
+
+FINRA & REGULATED INDUSTRIES
+
+Acme supports deployments in regulated financial services environments. For customers subject to FINRA, SEC Rule 17a-4, or CFTC recordkeeping requirements, Acme offers a WORM-compliant (Write Once Read Many) audit log add-on that satisfies electronic recordkeeping obligations.
+
+Financial services customers should work with their Account Executive to complete a Technical Security Review (TSR) prior to contract signature. TSRs typically take 10 business days and require completion of Acme's security questionnaire.
+
+PENETRATION TESTING & VULNERABILITY MANAGEMENT
+
+Acme conducts annual third-party penetration tests of all customer-facing infrastructure. Summary results are available to enterprise customers upon request under NDA. Acme maintains a responsible disclosure program via HackerOne.
+
+Vulnerability patching SLAs:
+- Critical vulnerabilities: patched within 24 hours
+- High severity: patched within 7 days
+- Medium severity: patched within 30 days
+- Low severity: addressed in next scheduled release cycle
+
+ACCESS CONTROLS & AUTHENTICATION
+
+Acme supports SSO via SAML 2.0 and OIDC on all plans. SCIM provisioning for automated user lifecycle management is available on Enterprise and above. Multi-factor authentication (MFA) can be enforced org-wide by administrators.
+
+Role-based access control (RBAC) allows administrators to define custom roles with granular permission sets. Audit logs capture all user actions, admin changes, and API calls with timestamps and IP addresses, retained for 12 months by default (extended retention available on Enterprise Plus).
