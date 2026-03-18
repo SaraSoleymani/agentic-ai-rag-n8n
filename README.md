@@ -2,7 +2,7 @@
 
 This repository contains the n8n workflow JSON files for Article 5 of the **Building with Agentic AI** series: *RAG Systems in Practice: From Simple Retrieval to Agentic and Graph RAG*.
 
-The series is published on [Medium](#) and [LinkedIn](#).
+The series is published on [Medium](https://medium.com/@sarasoleymani) and [LinkedIn](#).
 
 ---
 
