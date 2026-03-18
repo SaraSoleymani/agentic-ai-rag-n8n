@@ -1,0 +1,250 @@
+{
+  "name": "RAG- Query pipeline",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        0,
+        0
+      ],
+      "id": "b9663438-dff3-4107-88d9-a49802328e57",
+      "name": "When chat message received",
+      "webhookId": "YOUR_WEBHOOK_ID"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "You are a helpful sales assistant for Acme. \nAnswer questions using only the information retrieved \nfrom the knowledge base. If the answer is not in the \nknowledge base, say so clearly rather than guessing. \nAlways cite which document your answer came from."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "a680b023-442a-489d-a800-a12ac3409d18",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o",
+          "mode": "list",
+          "cachedResultName": "gpt-4o"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        64,
+        208
+      ],
+      "id": "6d47eec5-e0a4-4f0a-b38a-39df233a7e48",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "YOUR_OPENAI_CREDENTIAL_ID",
+          "name": "Your OpenAI Account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "Use this tool to retrieve relevant information from the \nAcme sales knowledge base. Call this tool when answering \nquestions about product security, compliance, pricing, \ndiscount policies, or competitive positioning. \nInput should be the user's question or a refined version of it.",
+        "pineconeIndex": {
+          "__rl": true,
+          "value": "sales-knowledge-base",
+          "mode": "list",
+          "cachedResultName": "sales-knowledge-base"
+        },
+        "options": {
+          "pineconeNamespace": "gtm-docs"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
+      "typeVersion": 1.3,
+      "position": [
+        368,
+        192
+      ],
+      "id": "56cbc821-9cf7-429e-8dd0-1637a2cd7fb1",
+      "name": "Pinecone Vector Store",
+      "credentials": {
+        "pineconeApi": {
+          "id": "YOUR_PINECONE_CREDENTIAL_ID",
+          "name": "Your Pinecone Account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {
+          "dimensions": 512
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        320,
+        368
+      ],
+      "id": "341279a9-1399-4938-93a9-2813aa527c43",
+      "name": "Embeddings OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "YOUR_OPENAI_CREDENTIAL_ID",
+          "name": "Your OpenAI Account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Chat Trigger\nEntry point for the query workflow.\nOpens a built-in chat interface in n8n for testing.\nIn production this can be replaced with a Webhook\nnode to connect to Slack, a web form, or a frontend.",
+        "height": 192,
+        "width": 320,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -368,
+        0
+      ],
+      "typeVersion": 1,
+      "id": "21bfb425-f6f8-4b93-9419-1854490583de",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## AI Agent\nReceives the user query and decides when to call\nthe Pinecone tool based on the tool description.\nGenerates a grounded response using only the\nretrieved chunks, not model memory.\nModel: GPT-4o",
+        "height": 192,
+        "width": 336,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        176,
+        -208
+      ],
+      "typeVersion": 1,
+      "id": "49f53437-0239-4ad1-897a-7e3008db77a1",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "## OpenAI Embedings\nEmbeds the incoming query into a 1536-dimension vector\nusing text-embedding-3-small — the same model used\nduring ingestion. Model consistency between ingestion\nand retrieval is critical for accurate similarity search.",
+        "height": 192,
+        "width": 320,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -64,
+        320
+      ],
+      "typeVersion": 1,
+      "id": "a0ca0e3e-29a4-4c5e-8880-ce78b533252b",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "## Pinecone Vector Store\nRetrieves the most semantically similar chunks\nfrom the knowledge base based on the incoming query.\nOperation: Retrieve Documents (As Tool for AI Agent)\nIndex: sales-knowledge-base | Namespace: gtm-docs\nThe Agent calls this tool when it needs to look up information.",
+        "height": 192,
+        "width": 400,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        624,
+        160
+      ],
+      "typeVersion": 1,
+      "id": "e50f9d7b-d1a3-4a05-bca3-40744a9d3911",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": "## Chat Trigger\nEntry point for the query workflow.\nOpens a built-in chat interface in n8n for testing.\nIn production this can be replaced with a Webhook\nnode to connect to Slack, a web form, or a frontend.",
+        "height": 192,
+        "width": 320,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        448,
+        384
+      ],
+      "typeVersion": 1,
+      "id": "6cf597ea-44fd-4ca7-abed-117ef6225e1a",
+      "name": "Sticky Note4"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pinecone Vector Store": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "7cefd192-22dd-4efb-8f14-6c624beb75e1",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "YOUR_N8N_INSTANCE_ID"
+  },
+  "id": "YOUR_WORKFLOW_ID",
+  "tags": []
+}
