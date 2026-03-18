@@ -2,7 +2,7 @@
 
 This repository contains the n8n workflow JSON files for Article 5 of the **Building with Agentic AI** series: *RAG Systems in Practice: From Simple Retrieval to Agentic and Graph RAG*.
 
-The series is published on [Medium](https://medium.com/@sarasoleymani) and [LinkedIn](#).
+The series is published on [Medium](https://medium.com/@sarasoleymani) and [LinkedIn](https://www.linkedin.com/in/sarasoleymani/).
 
 ---
 
@@ -229,9 +229,10 @@ A few things that aren't obvious from the n8n docs:
 
 | Article | Topic |
 |---------|-------|
-| Week 1 | How to pick the right problem for AI agents |
-| Week 2 | What is an agentic system, actually? |
-| Week 4 | The AI Meeting Prep Assistant: from problem to full product |
+| Week 1 | How to pick the right problem for AI agents and Automation |
+| Week 2 | Building AI Agents in Practice: A Sales Outreach Agent with n8n and Claude |
+| Week 3 | Bad Prompt, Good Prompt, Great Prompt: The Practical Guide to Prompt Engineering [+ Sales Agent Example] |
+| Week 4 | The AI Meeting Prep Assistant: From Problem to a Full Product with n8n and v0
 | Week 5 | RAG systems in practice: Simple, Agentic, and Graph RAG ← you are here |
 | Week 6 | Evaluations: how to know when your RAG system is ready for launch |
 
@@ -241,4 +242,4 @@ A few things that aren't obvious from the n8n docs:
 
 **Building with Agentic AI** is a 10-week series covering practical agentic AI implementation for GTM, sales, and marketing teams. Each article pairs conceptual explanation with real GTM examples and hands-on n8n workflow builds.
 
-Follow along on [Medium](#) and [LinkedIn](#).
+Follow along on [Medium](https://medium.com/@sarasoleymani) and [LinkedIn](https://www.linkedin.com/in/sarasoleymani/).
